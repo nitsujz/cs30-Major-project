@@ -1,9 +1,5 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Tetris
+// Justin Nguyen
 
 
 function setup() {
@@ -12,6 +8,6 @@ function setup() {
 
 function draw() {
   background(220);
-
+  
   square(mouseX, mouseY, 100);
 }
