@@ -8,6 +8,7 @@
 - Blocks have different shapes and colors
 - Be able to move the blocks side to side
 - Detect collision to make block stop
+- Endgame
 
 ## Nice to have list
 - Make a score tracker

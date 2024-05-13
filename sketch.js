@@ -96,6 +96,7 @@ function generateRandomBlock() {
   const randomType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
   const randomShape = blocks[randomType];
   return new Block(randomShape);
+  
 }
 
 //show grid
@@ -129,7 +130,9 @@ class Block {
   }
 
   update() {
+    this.inGrid();
     this.moveDown();
+
     this.color = color(random(255), random(255), random(255));
   }
 
@@ -137,11 +140,15 @@ class Block {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
         if (this.shape[y][x]) {
-          if (this.x > windowWidth || this.x < windowWidth || this.y > windowHeight || this.y < windowHeight) {
-            grid[this.y + y][this.x + x] = 1;
-          }
+          grid[this.y + y][this.x + x] = 1;
         }
       }
+    }
+  }
+
+  inGrid() {
+    if (this.x > grid || this.x < grid) {
+      this.x = grid / 2;
     }
   }
 
