@@ -61,14 +61,12 @@ let cellSize;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   cellSize = height / grid.length;
-  let block = new Block();
   currentBlock = generateRandomBlock();
 }
-
 function draw() {
   background(220);
   showGrid();
-  
+
   if (currentBlock) {
     currentBlock.update();
     currentBlock.show();
@@ -78,12 +76,12 @@ function draw() {
 
 function keyPressed() {
   if (currentBlock) {
-    if (key === "w") {
+    if (key === "a") {
       currentBlock.moveLeft();
-    }
+    } 
     else if (key === "d") {
       currentBlock.moveRight();
-    }
+    } 
     else if (key === "s") {
       currentBlock.moveDown();
     }
@@ -96,7 +94,6 @@ function generateRandomBlock() {
   const randomType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
   const randomShape = blocks[randomType];
   return new Block(randomShape);
-  
 }
 
 //show grid
@@ -104,36 +101,36 @@ function showGrid() {
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
       fill(grid[y][x] === 1 ? "black" : "white");
-      square(x * cellSize, y * cellSize, cellSize);
+      rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
 }
 
 //make block
 class Block {
-  constructor(shape, color) {
+  constructor(shape) {
     this.shape = shape;
-    this.x = Math.floor(cellSize / 2) - Math.floor(shape[0].length / 2); 
-    this.y = 0; 
-    this.color = color;
+    this.x = Math.floor(grid[0].length / 2) - Math.floor(shape[0].length / 2);
+    this.y = 0;
+    this.color = color(random(255), random(255), random(255));
   }
 
   show() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
         if (this.shape[y][x]) {
-          fill("white");
-          square((this.x + x) * cellSize, (this.y + y) * cellSize, cellSize);
+          fill(this.color);
+          rect((this.x + x) * cellSize, (this.y + y) * cellSize, cellSize, cellSize);
         }
       }
     }
   }
 
   update() {
+    if (this.y + this.shape.length < grid.length) {
+      this.moveDown();
+    }
     this.inGrid();
-    this.moveDown();
-
-    this.color = color(random(255), random(255), random(255));
   }
 
   addAnotherBlock() {
@@ -147,17 +144,21 @@ class Block {
   }
 
   inGrid() {
-    if (this.x > grid || this.x < grid) {
-      this.x = grid / 2;
+    if (this.x < 0) {
+      this.x = 0;
+    } else if (this.x + this.shape[0].length > grid[0].length) {
+      this.x = grid[0].length - this.shape[0].length;
     }
   }
 
   moveDown() {
     this.y++;
   }
+
   moveLeft() {
     this.x--;
   }
+
   moveRight() {
     this.x++;
   }
