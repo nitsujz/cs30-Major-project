@@ -45,8 +45,8 @@ const blocks = {
   ],
 
   T: [
-    [1, 1, 1],
     [0, 1, 0],
+    [1, 1, 1],
   ],
 
   Z: [
@@ -63,6 +63,7 @@ function setup() {
   cellSize = height / grid.length;
   currentBlock = generateRandomBlock();
 }
+
 function draw() {
   background(220);
   showGrid();
@@ -130,6 +131,7 @@ class Block {
     if (this.y + this.shape.length < grid.length) {
       this.moveDown();
     }
+
     this.inGrid();
   }
 
@@ -146,7 +148,8 @@ class Block {
   inGrid() {
     if (this.x < 0) {
       this.x = 0;
-    } else if (this.x + this.shape[0].length > grid[0].length) {
+    }
+    else if (this.x + this.shape[0].length > grid[0].length) {
       this.x = grid[0].length - this.shape[0].length;
     }
   }
