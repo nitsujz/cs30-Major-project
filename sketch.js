@@ -123,15 +123,14 @@ class Block {
           fill(this.color);
           rect((this.x + x) * cellSize, (this.y + y) * cellSize, cellSize, cellSize);
         }
-      }
+      }        
     }
   }
-
+  
   update() {
     if (this.y + this.shape.length < grid.length) {
       this.moveDown();
     }
-
     this.inGrid();
   }
 
@@ -139,7 +138,7 @@ class Block {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
         if (this.shape[y][x]) {
-          grid[this.y + y][this.x + x] = 1;
+          grid[this.y + y][this.x + x];
         }
       }
     }
