@@ -86,16 +86,12 @@ function keyPressed() {
     else if (key === "s") {
       currentBlock.moveDown();
     }
+    else if (key === "r") {
+      currentBlock = false;
+    }
   }
 }
 
-//use to create random block
-function generateRandomBlock() {
-  const blockTypes = Object.keys(blocks);
-  const randomType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
-  const randomShape = blocks[randomType];
-  return new Block(randomShape);
-}
 
 //show grid
 function showGrid() {
@@ -105,6 +101,14 @@ function showGrid() {
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
+}
+
+//use to create random block
+function generateRandomBlock() {
+  const blockTypes = Object.keys(blocks);
+  const randomType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
+  const randomShape = blocks[randomType];
+  return new Block(randomShape);
 }
 
 //make block
