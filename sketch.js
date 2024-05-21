@@ -92,16 +92,14 @@ function keyPressed() {
     else if (key === "s") {
       currentBlock.moveDown();
     }
-    else if (key === "r") {
-      currentBlock = false;
-    }
   }
 }
+
 //Show grid
 function showGrid() {
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
-      fill(grid[y][x] === 1 ? "black" : "white");
+      fill(grid[y][x] === 1 ? "white" : "black");
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
@@ -139,7 +137,8 @@ class Block {
   update() {
     if (this.y + this.shape.length < grid.length && !this.landed) {
       this.moveDown();
-    } else {
+    }
+    else {
       this.landed = true; 
     }
     this.inGrid();
