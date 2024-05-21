@@ -57,26 +57,32 @@ const blocks = {
 
 let currentBlock;
 let cellSize;
+let fallTimer = 30;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   cellSize = height / grid.length;
   currentBlock = generateRandomBlock();
+  frameRate(60); 
 }
 
 function draw() {
   background(220);
   showGrid();
 
-  if (currentBlock) {
+  //Check if it's time to move the block down
+  if (frameCount % fallTimer === 0 && currentBlock) { 
     currentBlock.update();
+  }
+
+  if (currentBlock) {
     currentBlock.show();
     currentBlock.addAnotherBlock();
   }
 }
 
 function keyPressed() {
-  if (currentBlock) {
+  if (currentBlock && !currentBlock.landed) {
     if (key === "a") {
       currentBlock.moveLeft();
     } 
@@ -91,9 +97,7 @@ function keyPressed() {
     }
   }
 }
-
-
-//show grid
+//Show grid
 function showGrid() {
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
@@ -118,6 +122,7 @@ class Block {
     this.x = Math.floor(grid[0].length / 2) - Math.floor(shape[0].length / 2);
     this.y = 0;
     this.color = color(random(255), random(255), random(255));
+    this.landed = false; 
   }
 
   show() {
@@ -127,13 +132,15 @@ class Block {
           fill(this.color);
           rect((this.x + x) * cellSize, (this.y + y) * cellSize, cellSize, cellSize);
         }
-      }        
+      }
     }
   }
-  
+
   update() {
-    if (this.y + this.shape.length < grid.length) {
+    if (this.y + this.shape.length < grid.length && !this.landed) {
       this.moveDown();
+    } else {
+      this.landed = true; 
     }
     this.inGrid();
   }
@@ -162,10 +169,14 @@ class Block {
   }
 
   moveLeft() {
-    this.x--;
+    if (!this.landed) {
+      this.x--;
+    }
   }
 
   moveRight() {
-    this.x++;
+    if (!this.landed) {
+      this.x++;
+    }
   }
 }
