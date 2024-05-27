@@ -86,7 +86,6 @@ function draw() {
   if (currentBlock) {
     currentBlock.show();
     currentBlock.addAnotherBlock();
-  
   }
 }
 
@@ -148,7 +147,7 @@ class Block {
       this.moveDown();
     }
     else {
-      this.landed = true; 
+      this.landed = true;
     }
     this.inGrid();
   }
