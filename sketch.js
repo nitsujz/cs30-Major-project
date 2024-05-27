@@ -152,12 +152,23 @@ class Block {
     this.inGrid();
   }
 
-  addAnotherBlock() {
+  addAnotherBlock() {//something's wrong
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
         if (this.shape[y][x]) {
           grid[this.y + y][this.x + x];
         }
+      }
+    }
+  }
+
+  collisionDetection() {
+    for (let y = 0; y < this.shape.length; y++) {
+      for (let x = 0; x < this.shape[y].length; x++) {
+        //if block touches another block
+
+        //stop
+
       }
     }
   }
