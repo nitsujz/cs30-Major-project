@@ -129,6 +129,8 @@ class Block {
     this.y = 0;
     this.color = color(random(255), random(255), random(255));
     this.landed = false;
+    this.hit = false;
+    
   }
 
   show() {
@@ -168,6 +170,15 @@ class Block {
     }
     else if (this.x + this.shape[0].length > grid[0].length) {
       this.x = grid[0].length - this.shape[0].length;
+    }
+  }
+  collisionDetection() {
+    for (let y = 0; y < this.shapelength; y++) {
+      for (let x = 0; x < this.shape[y].length; x++) {
+        if () {
+
+        }
+      }
     }
   }
 
