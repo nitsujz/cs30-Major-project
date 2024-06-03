@@ -162,17 +162,6 @@ class Block {
     }
   }
 
-  collisionDetection() {
-    for (let y = 0; y < this.shape.length; y++) {
-      for (let x = 0; x < this.shape[y].length; x++) {
-        //if block touches another block
-
-        //stop
-
-      }
-    }
-  }
-
   inGrid() {
     if (this.x < 0) {
       this.x = 0;
