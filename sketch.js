@@ -172,15 +172,19 @@ class Block {
       this.x = grid[0].length - this.shape[0].length;
     }
   }
-  collisionDetection() {
-    for (let y = 0; y < this.shapelength; y++) {
-      for (let x = 0; x < this.shape[y].length; x++) {
-        if () {
 
-        }
-      }
-    }
-  }
+  // collisionDetection() {
+  //   for (let y = 0; y < this.shapelength; y++) {
+  //     for (let x = 0; x < this.shape[y].length; x++) {
+  //       if (this.y <= this.shape[y][x]) {
+  //         this.landed = true;
+  //       }
+  //       else if (this.x > this.shape[y][x]) {
+  //         this.landed = false;
+  //       }
+  //     }
+  //   }
+  // }
 
   moveDown() {
     this.y++;
