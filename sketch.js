@@ -85,7 +85,6 @@ function draw() {
 
   if (currentBlock) {
     currentBlock.show();
-    currentBlock.addAnotherBlock();
   }
 }
 
@@ -129,8 +128,6 @@ class Block {
     this.y = 0;
     this.color = color(random(255), random(255), random(255));
     this.landed = false;
-    this.hit = false;
-    
   }
 
   show() {
@@ -145,59 +142,62 @@ class Block {
   }
 
   update() {
-    if (this.y + this.shape.length < grid.length && !this.landed) {
+    if (this.y + this.shape.length < grid.length && !this.checkCollision()) {
       this.moveDown();
-    }
+    } 
     else {
       this.landed = true;
+      this.addAnotherBlock();
+      currentBlock = generateRandomBlock();
     }
-    this.inGrid();
   }
 
-  addAnotherBlock() {//something's wrong
+  addAnotherBlock() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
         if (this.shape[y][x]) {
-          grid[this.y + y][this.x + x];
+          grid[this.y + y][this.x + x] = 1;
         }
       }
     }
   }
 
-  inGrid() {
-    if (this.x < 0) {
-      this.x = 0;
+  //check if the block touches another block
+  checkCollision() {
+    for (let y = 0; y < this.shape.length; y++) {
+      for (let x = 0; x < this.shape[y].length; x++) {
+        if (this.shape[y][x] && (this.y + y + 1 >= grid.length || grid[this.y + y + 1][this.x + x])) {
+          return true;
+        }
+      }
     }
-    else if (this.x + this.shape[0].length > grid[0].length) {
-      this.x = grid[0].length - this.shape[0].length;
+    return false;
+  }
+  //make sure the blocks don't go outside the grid
+  checkSideCollision(direction) {
+    for (let y = 0; y < this.shape.length; y++) {
+      for (let x = 0; x < this.shape[y].length; x++) {
+        if (this.shape[y][x] && (this.x + x + direction < 0 || this.x + x + offset >= grid[0].length || grid[this.y + y][this.x + x + direction])) {
+          return true;
+        }
+      }
     }
+    return false;
   }
 
-  // collisionDetection() {
-  //   for (let y = 0; y < this.shapelength; y++) {
-  //     for (let x = 0; x < this.shape[y].length; x++) {
-  //       if (this.y <= this.shape[y][x]) {
-  //         this.landed = true;
-  //       }
-  //       else if (this.x > this.shape[y][x]) {
-  //         this.landed = false;
-  //       }
-  //     }
-  //   }
-  // }
 
   moveDown() {
     this.y++;
   }
 
   moveLeft() {
-    if (!this.landed) {
+    if (!this.landed && this.x > 0 && !this.checkSideCollision(-1)) {
       this.x--;
     }
   }
 
   moveRight() {
-    if (!this.landed) {
+    if (!this.landed && this.x + this.shape[0].length < grid[0].length && !this.checkSideCollision(1)) {
       this.x++;
     }
   }
