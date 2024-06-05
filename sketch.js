@@ -151,7 +151,7 @@ class Block {
       currentBlock = generateRandomBlock();
     }
   }
-
+   
   addAnotherBlock() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -173,18 +173,18 @@ class Block {
     }
     return false;
   }
+
   //make sure the blocks don't go outside the grid
   checkSideCollision(direction) {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
-        if (this.shape[y][x] && (this.x + x + direction < 0 || this.x + x + offset >= grid[0].length || grid[this.y + y][this.x + x + direction])) {
+        if (this.shape[y][x] && (this.x + x + direction < 0 || this.x + x + direction >= grid[0].length || grid[this.y + y][this.x + x + direction])) {
           return true;
         }
       }
     }
     return false;
   }
-
 
   moveDown() {
     this.y++;
