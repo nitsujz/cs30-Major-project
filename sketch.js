@@ -157,6 +157,7 @@ class Block {
       currentBlock = generateRandomBlock();
     }
   }
+
   addAnotherBlock() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -166,7 +167,7 @@ class Block {
       }
     }
   }
-
+  
   checkCollision() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -187,6 +188,15 @@ class Block {
       }
     }
     return false;
+  }
+
+  makeRowDisappears() {
+    for (let y = 0; y < this.shape.length; y++) {
+      for (let x = 0; x < this.shape[y].length; x++) {
+        //make a row of blocks disappear when fully filled
+        
+      }
+    }
   }
 
   moveDown() {
