@@ -106,8 +106,14 @@ function keyPressed() {
 function showGrid() {
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
-      fill(grid[y][x] === 1 ? "white" : "black");
-      rect(x * cellSize, y * cellSize, cellSize, cellSize);
+      if (grid[y][x]) {
+        fill(grid[y][x]);
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+      } 
+      else {
+        fill("black");
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+      }
     }
   }
 }
@@ -151,18 +157,16 @@ class Block {
       currentBlock = generateRandomBlock();
     }
   }
-   
   addAnotherBlock() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
         if (this.shape[y][x]) {
-          grid[this.y + y][this.x + x] = 1;
+          grid[this.y + y][this.x + x] = this.color;
         }
       }
     }
   }
 
-  //check if the block touches another block
   checkCollision() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -174,7 +178,6 @@ class Block {
     return false;
   }
 
-  //make sure the blocks don't go outside the grid
   checkSideCollision(direction) {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -187,7 +190,14 @@ class Block {
   }
 
   moveDown() {
-    this.y++;
+    if (!this.checkCollision()) {
+      this.y++;
+    } 
+    else {
+      this.landed = true;
+      this.addAnotherBlock();
+      currentBlock = generateRandomBlock();
+    }
   }
 
   moveLeft() {
