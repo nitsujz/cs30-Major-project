@@ -66,6 +66,7 @@ const blocks = {
 let currentBlock;
 let cellSize;
 let fallTimer = 30;
+let endGame = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -89,17 +90,19 @@ function draw() {
 }
 
 function keyPressed() {
-  if (currentBlock && !currentBlock.landed) {
-    if (key === "a") {
-      currentBlock.moveLeft();
-    } 
-    else if (key === "d") {
-      currentBlock.moveRight();
-    } 
-    else if (key === "s") {
-      currentBlock.moveDown();
+  if (endGame === false) {
+    if (currentBlock && !currentBlock.landed) {
+      if (key === "a") {
+        currentBlock.moveLeft();
+      } 
+      else if (key === "d") {
+        currentBlock.moveRight();
+      } 
+      else if (key === "s") {
+        currentBlock.moveDown();
+      }
     }
-  }
+  } 
 }
 
 //Show grid
