@@ -154,6 +154,7 @@ class Block {
     else {
       this.landed = true;
       this.addAnotherBlock();
+      this.makeRowDisappear();
       currentBlock = generateRandomBlock();
     }
   }
@@ -190,11 +191,11 @@ class Block {
     return false;
   }
 
-  makeRowDisappears() {
-    for (let y = 0; y < this.shape.length; y++) {
-      for (let x = 0; x < this.shape[y].length; x++) {
-        //make a row of blocks disappear when fully filled
-        
+  makeRowDisappear() {
+    for (let y = grid.length - 1; y >= 0; y--) {
+      if (grid[y].every(cell => cell !== 0)) {
+        grid.splice(y, 1);
+        grid.unshift(new Array(grid[0].length).fill(0));
       }
     }
   }
@@ -206,6 +207,7 @@ class Block {
     else {
       this.landed = true;
       this.addAnotherBlock();
+      this.makeRowDisappear();
       currentBlock = generateRandomBlock();
     }
   }
