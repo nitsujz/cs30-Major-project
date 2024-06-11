@@ -90,22 +90,21 @@ function draw() {
 }
 
 function keyPressed() {
-  if (endGame === false) {
-    if (currentBlock && !currentBlock.landed) {
-      if (key === "a") {
-        currentBlock.moveLeft();
-      } 
-      else if (key === "d") {
-        currentBlock.moveRight();
-      } 
-      else if (key === "s") {
-        currentBlock.moveDown();
-      }
+  if (currentBlock && !currentBlock.landed) {
+    //used to move blocks down and side to side
+    if (key === "a") {
+      currentBlock.moveLeft();
+    } 
+    else if (key === "d") {
+      currentBlock.moveRight();
+    } 
+    else if (key === "s") {
+      currentBlock.moveDown();
     }
-  } 
-}
+  }
+} 
 
-//Show grid
+//create and show grid
 function showGrid() {
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
@@ -162,6 +161,7 @@ class Block {
     }
   }
 
+  //keep adding blocks to the grid
   addAnotherBlock() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -171,7 +171,8 @@ class Block {
       }
     }
   }
-  
+
+  //check if the block touches other block and stop it
   checkCollision() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -183,6 +184,7 @@ class Block {
     return false;
   }
 
+  //check if the blocks have went outside the grid
   checkSideCollision(direction) {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -194,6 +196,7 @@ class Block {
     return false;
   }
 
+  //make the row disappear and move other blocks down when the row is fully filled
   makeRowDisappear() {
     for (let y = grid.length - 1; y >= 0; y--) {
       if (grid[y].every(cell => cell !== 0)) {
