@@ -120,7 +120,7 @@ function showGrid() {
   }
 }
 
-//use to create random block
+//use to create random blocks
 function generateRandomBlock() {
   const blockTypes = Object.keys(blocks);
   const randomType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
@@ -161,7 +161,6 @@ class Block {
     }
   }
 
-  //keep adding blocks to the grid
   addAnotherBlock() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
