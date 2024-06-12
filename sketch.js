@@ -66,7 +66,7 @@ const blocks = {
 let currentBlock;
 let cellSize;
 let fallTimer = 30;
-let endGame = false;
+let gameOver = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -79,29 +79,34 @@ function draw() {
   background(220);
   showGrid();
 
+  if (gameOver === true) {
   //Check if it's time to move the block down
-  if (frameCount % fallTimer === 0 && currentBlock) { 
-    currentBlock.update();
-  }
-
-  if (currentBlock) {
-    currentBlock.show();
+    if (frameCount % fallTimer === 0 && currentBlock) { 
+      currentBlock.update();
+    }
+    
+    if (currentBlock) {
+      currentBlock.show();
+    }
   }
 }
 
 function keyPressed() {
-  if (currentBlock && !currentBlock.landed) {
-    //used to move blocks down and side to side
-    if (key === "a") {
-      currentBlock.moveLeft();
-    } 
-    else if (key === "d") {
-      currentBlock.moveRight();
-    } 
-    else if (key === "s") {
-      currentBlock.moveDown();
+  if (gameOver === false) {
+    if (currentBlock && !currentBlock.landed) {
+      //used to move blocks down and side to side
+      if (key === "a") {
+        currentBlock.moveLeft();
+      } 
+      else if (key === "d") {
+        currentBlock.moveRight();
+      } 
+      else if (key === "s") {
+        currentBlock.moveDown();
+      }
     }
   }
+
 } 
 
 //create and show grid
@@ -170,7 +175,7 @@ class Block {
       }
     }
   }
-
+  
   //check if the block touches other block and stop it
   checkCollision() {
     for (let y = 0; y < this.shape.length; y++) {
@@ -201,7 +206,7 @@ class Block {
       if (grid[y].every(cell => cell !== 0)) {
         grid.splice(y, 1);
         grid.unshift(new Array(grid[0].length).fill(0));
-      }
+      } 
     }
   }
 
