@@ -79,34 +79,29 @@ function draw() {
   background(220);
   showGrid();
 
-  if (gameOver === true) {
   //Check if it's time to move the block down
-    if (frameCount % fallTimer === 0 && currentBlock) { 
-      currentBlock.update();
-    }
-    
-    if (currentBlock) {
-      currentBlock.show();
-    }
+  if (frameCount % fallTimer === 0 && currentBlock) { 
+    currentBlock.update();
+  }
+  
+  if (currentBlock) {
+    currentBlock.show();
   }
 }
 
 function keyPressed() {
-  if (gameOver === false) {
-    if (currentBlock && !currentBlock.landed) {
-      //used to move blocks down and side to side
-      if (key === "a") {
-        currentBlock.moveLeft();
-      } 
-      else if (key === "d") {
-        currentBlock.moveRight();
-      } 
-      else if (key === "s") {
-        currentBlock.moveDown();
-      }
+  if (currentBlock && !currentBlock.landed) {
+    //used to move blocks down and side to side
+    if (key === "a") {
+      currentBlock.moveLeft();
+    } 
+    else if (key === "d") {
+      currentBlock.moveRight();
+    } 
+    else if (key === "s") {
+      currentBlock.moveDown();
     }
   }
-
 } 
 
 //create and show grid
