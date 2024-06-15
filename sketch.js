@@ -79,9 +79,23 @@ function draw() {
   background(220);
   showGrid();
 
-  //Check if it's time to move the block down
+  if (gameOver) {
+    textSize(64); 
+    textAlign(CENTER, CENTER); 
+    fill("red");
+    text("Game Over", width / 2, height / 2);
+    noLoop();
+    return;
+  }
+
+  //check if it's time to move the block down
   if (frameCount % fallTimer === 0 && currentBlock) { 
     currentBlock.update();
+  }
+
+  //check if the 's' key is held down to move the block down
+  if (keyIsDown(83) && currentBlock && !currentBlock.landed) {
+    currentBlock.moveDown();
   }
   
   if (currentBlock) {
@@ -125,7 +139,14 @@ function generateRandomBlock() {
   const blockTypes = Object.keys(blocks);
   const randomType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
   const randomShape = blocks[randomType];
-  return new Block(randomShape);
+  const newBlock = new Block(randomShape);
+
+  //check if new block overlaps with existing blocks (game over condition)
+  if (newBlock.checkCollision()) {
+    gameOver = true;
+  }
+
+  return newBlock;
 }
 
 //make block
@@ -171,7 +192,7 @@ class Block {
     }
   }
   
-  //check if the block touches other block and stop it
+  //check if the block touches another block or the bottom of the grid
   checkCollision() {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
@@ -183,7 +204,7 @@ class Block {
     return false;
   }
 
-  //check if the blocks have went outside the grid
+  //check if the blocks have gone outside the grid
   checkSideCollision(direction) {
     for (let y = 0; y < this.shape.length; y++) {
       for (let x = 0; x < this.shape[y].length; x++) {
